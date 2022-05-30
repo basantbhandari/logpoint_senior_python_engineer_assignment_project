@@ -1,0 +1,106 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+
+{% block indexcontent %}
+
+ <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>catelog filter</h1>
+      <div class="card card-body">
+            <form action="" method="get">
+              {{movies_catelog_filter.form}}
+              <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h1>Movie filter</h1>
+      <div class="card card-body">
+            <form action="" method="get">
+              {{movies_filter.form}}
+              <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
+ </div>
+
+
+<div class="card">
+  <h5 class="card-header">Catelog</h5>
+  <div class="card-body">
+
+    <div class="container">
+      <div class="container-fluid">
+                    
+
+            {% for cat_item in movies_catelog  %}
+              <div class="accordion" id="accordionExample">
+                   <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <img src="{{cat_item.movie_catelog_image.url}}" class="img-thumbnail" width="50px" alt="" >
+                                  <h4>{{cat_item.movie_catelog_title}}</h4>
+                                </button>
+                          </h2>
+
+
+
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                      {% for m_item in movies %}
+                      {% if cat_item.movie_catelog_id == m_item.movie_belongto_catelog.movie_catelog_id %}
+
+                    <!-- each video item-->
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-4">
+                          <div class="card card-body">
+                            <div class="card" style="width: 18rem;">
+                              <img src="{{m_item.movie_poster.url}}" class="card-img-top" alt="images here">
+                              <div class="card-body">
+                                <h5 class="card-title">{{m_item.movie_title}}</h5>
+                                <p class="card-text">{{m_item.movie_storyline}}</p>
+                                <a href="#" class="btn btn-primary">For more</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <video class="video-fluid" width="600px" height="550px"  controls>
+                            <source src="{{ m_item.movie_file.url }}" type="video/mp4">
+                          </video>
+                          <p>{{ m_item.movie_duration }}</p>
+                          <p>{{ m_item.movie_director }}</p>
+                          <p>{{ m_item.movie_cast }}</p>
+                          <p>{{ m_item.movie_cast }}</p>
+                          <p>{{ m_item.movie_language }}</p>
+                          <p>{{ m_item.movie_country }}</p>
+                        </div>
+                      </div>
+                      {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock indexcontent %}
